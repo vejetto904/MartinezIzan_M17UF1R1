@@ -1,15 +1,18 @@
 using System.Collections;
 using UnityEngine;
-
+[RequireComponent(typeof(Rigidbody2D))]
 public class ControlPersonaje : MonoBehaviour
 {
     public float velocidadMovimiento = 5f;
     private Animator animador;
     private bool gravedadInvertida = false;
+    private Rigidbody2D rb;
+
 
     void Start()
     {
         animador = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -31,10 +34,11 @@ public class ControlPersonaje : MonoBehaviour
         {
             // Si el personaje se está moviendo, ajusta la orientación del sprite
             spriteRenderer.flipX = (movimientoHorizontal < 0);
+            Debug.Log(movimientoHorizontal);
         }
 
         // Mover el personaje en la dirección correcta
-        transform.Translate(movimiento * velocidadMovimiento * Time.deltaTime * (gravedadInvertida ? -1 : 1));
+        transform.Translate(movimiento * velocidadMovimiento * Time.deltaTime);
     }
 
     void InvertirGravedad()
@@ -42,8 +46,14 @@ public class ControlPersonaje : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             gravedadInvertida = !gravedadInvertida;
-            Physics2D.gravity = new Vector2(0, gravedadInvertida ? -9.8f : 9.8f);
-            transform.Rotate(0, 0, 180 * (gravedadInvertida ? -1 : 1)); // Gira el personaje 180 grados en el eje Z
+            if(gravedadInvertida == true)rb.gravityScale = -1;
+            else rb.gravityScale = 1;
+            // Obtener el componente SpriteRenderer
+             SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+            // Voltear el sprite verticalmente
+            spriteRenderer.flipY = true;
+            if (gravedadInvertida == true) spriteRenderer.flipY = true;
+            else spriteRenderer.flipY = false;
         }
     }
 
