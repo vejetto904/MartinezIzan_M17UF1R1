@@ -1,13 +1,15 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 [RequireComponent(typeof(Rigidbody2D))]
 public class ControlPersonaje : MonoBehaviour
 {
     public float velocidadMovimiento = 5f;
+    public float velocidadVertical = 7f;
     private Animator animador;
     private bool gravedadInvertida = false;
     private Rigidbody2D rb;
-
 
     void Start()
     {
@@ -23,6 +25,7 @@ public class ControlPersonaje : MonoBehaviour
             InvertirGravedad();
         }
         ActualizarAnimacion();
+        ReiniciarNivel();
     }
 
     void MoverPersonaje()
@@ -37,7 +40,6 @@ public class ControlPersonaje : MonoBehaviour
         {
             // Si el personaje se está moviendo, ajusta la orientación del sprite
             spriteRenderer.flipX = (movimientoHorizontal < 0);
-            Debug.Log(movimientoHorizontal);
         }
 
         // Mover el personaje en la dirección correcta
@@ -49,15 +51,27 @@ public class ControlPersonaje : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             gravedadInvertida = !gravedadInvertida;
-            if (gravedadInvertida == true) rb.gravityScale = -1;
-            else rb.gravityScale = 1;
+            rb.gravityScale = (gravedadInvertida) ? -1 : 1;
+
             // Obtener el componente SpriteRenderer
             SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+
             // Voltear el sprite verticalmente
-            spriteRenderer.flipY = true;
-            if (gravedadInvertida == true) spriteRenderer.flipY = true;
-            else spriteRenderer.flipY = false;
-        }      
+            spriteRenderer.flipY = gravedadInvertida;
+
+            Vector2 nuevaVelocidad = rb.velocity;
+            // Ajustar la velocidad vertical solo cuando se invierte la gravedad
+            if (gravedadInvertida)
+            {               
+                nuevaVelocidad.y = velocidadVertical * 1;
+                rb.velocity = nuevaVelocidad;
+            }
+            else
+            {
+                nuevaVelocidad.y = velocidadVertical * -1;
+                rb.velocity = nuevaVelocidad;
+            }
+        }
     }
 
     void ActualizarAnimacion()
@@ -65,4 +79,17 @@ public class ControlPersonaje : MonoBehaviour
         float movimientoHorizontal = Input.GetAxis("Horizontal");
         animador.SetBool("IsRunning", Mathf.Abs(movimientoHorizontal) > 0.1f);
     }
+
+    void ReiniciarNivel()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            // Obtener el índice de la escena actual
+            int indiceEscenaActual = SceneManager.GetActiveScene().buildIndex;
+
+            // Recargar la escena actual
+            SceneManager.LoadScene(indiceEscenaActual);
+        }
+    }
+
 }
