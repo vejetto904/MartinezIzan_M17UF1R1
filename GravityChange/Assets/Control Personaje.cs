@@ -18,7 +18,10 @@ public class ControlPersonaje : MonoBehaviour
     void Update()
     {
         MoverPersonaje();
-        InvertirGravedad();
+        if (rb.velocity.y == 0)
+        {
+            InvertirGravedad();
+        }
         ActualizarAnimacion();
     }
 
@@ -46,15 +49,15 @@ public class ControlPersonaje : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             gravedadInvertida = !gravedadInvertida;
-            if(gravedadInvertida == true)rb.gravityScale = -1;
+            if (gravedadInvertida == true) rb.gravityScale = -1;
             else rb.gravityScale = 1;
             // Obtener el componente SpriteRenderer
-             SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
             // Voltear el sprite verticalmente
             spriteRenderer.flipY = true;
             if (gravedadInvertida == true) spriteRenderer.flipY = true;
             else spriteRenderer.flipY = false;
-        }
+        }      
     }
 
     void ActualizarAnimacion()
