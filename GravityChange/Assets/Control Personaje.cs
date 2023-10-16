@@ -51,7 +51,7 @@ public class ControlPersonaje : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             gravedadInvertida = !gravedadInvertida;
-            //rb.gravityScale = (gravedadInvertida) ? -1 : 1;
+            rb.gravityScale = (gravedadInvertida) ? -1 : 1;
 
             // Obtener el componente SpriteRenderer
             SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
@@ -62,18 +62,6 @@ public class ControlPersonaje : MonoBehaviour
             Vector2 nuevaVelocidad = rb.velocity;
             nuevaVelocidad.y = velocidadVertical * -1;
             rb.velocity = nuevaVelocidad;
-
-            // Ajustar la velocidad vertical solo cuando se invierte la gravedad
-            if (gravedadInvertida)
-            {               
-                nuevaVelocidad.y = velocidadVertical * 1;
-                rb.velocity = nuevaVelocidad;
-            }
-            else
-            {
-                nuevaVelocidad.y = velocidadVertical * -1;
-                rb.velocity = nuevaVelocidad;
-            }
         }
     }
 
