@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public int ActualScene;
+    public Transform Player;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +18,11 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            Destroy(gameObject);
+            ActualScene = SceneManager.GetActiveScene().buildIndex;
+            PlayerPrefs.SetInt("ActualScene", ActualScene);
+            PlayerPrefs.Save();
+
             SceneManager.LoadScene(sceneName:"Pause");
         }
     }
@@ -24,20 +31,38 @@ public class GameManager : MonoBehaviour
         if (collision.gameObject.CompareTag("NextLevel"))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            GameObject LoadPJ = GameObject.Find("LoadPJ");
+            if (LoadPJ != null)
+            {
+                Vector3 Posiciones = LoadPJ.transform.position;
+                Player.position = new Vector3(Posiciones.x,Player.position.y,Player.position.z);
+
+            }
             DontDestroyOnLoad(gameObject);
         }
 
         if (collision.gameObject.CompareTag("ReturnLevel"))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-            Destroy(gameObject);
+            GameObject LoadPJ = GameObject.Find("Return");
+            if (LoadPJ != null)
+            {
+                Vector3 Posiciones = LoadPJ.transform.position;
+                Player.position = new Vector3(Posiciones.x, Player.position.y, Player.position.z);
+            }
+            if((SceneManager.GetActiveScene().buildIndex-1) == 2)
+            {
+                Destroy(gameObject);
+            }
+            
             //gameObject.transform.Translate(transform.position);
         }
         if (collision.gameObject.CompareTag("Pinchos"))
         {
-            Debug.Log("Pinchos");
             // El jugador ha tocado los pinchos, reinicia la escena
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            Destroy(gameObject);
+            SceneManager.LoadScene(0);
+            
         }
     }
 }

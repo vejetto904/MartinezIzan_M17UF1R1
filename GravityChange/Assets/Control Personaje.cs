@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class ControlPersonaje : MonoBehaviour
 {
     public float velocidadMovimiento = 5f;
-    private float velocidadVertical = 7f;
     private Animator animador;
     private bool gravedadInvertida = false;
     private Rigidbody2D rb;
@@ -58,10 +57,6 @@ public class ControlPersonaje : MonoBehaviour
 
             // Voltear el sprite verticalmente
             spriteRenderer.flipY = gravedadInvertida;
-
-            Vector2 nuevaVelocidad = rb.velocity;
-            nuevaVelocidad.y = velocidadVertical * -1;
-            rb.velocity = nuevaVelocidad;
         }
     }
 
