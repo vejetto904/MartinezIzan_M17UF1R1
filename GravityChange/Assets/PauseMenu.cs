@@ -14,9 +14,4 @@ public class PauseMenu : MonoBehaviour
     {
         Application.Quit();
     }
-    public void Continuar()
-    {
-        int actualScene = PlayerPrefs.GetInt("ActualScene");
-        SceneManager.LoadScene(actualScene);
-    }
 }

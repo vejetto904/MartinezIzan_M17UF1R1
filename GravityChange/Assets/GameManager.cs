@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public int ActualScene;
     public Transform Player;
     // Start is called before the first frame update
     void Start()
@@ -19,10 +18,6 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Destroy(gameObject);
-            ActualScene = SceneManager.GetActiveScene().buildIndex;
-            PlayerPrefs.SetInt("ActualScene", ActualScene);
-            PlayerPrefs.Save();
-
             SceneManager.LoadScene(sceneName:"Pause");
         }
     }
@@ -35,7 +30,7 @@ public class GameManager : MonoBehaviour
             if (LoadPJ != null)
             {
                 Vector3 Posiciones = LoadPJ.transform.position;
-                Player.position = new Vector3(Posiciones.x,Player.position.y,Player.position.z);
+                Player.position = new Vector3(Posiciones.x,Posiciones.y,Player.position.z);
 
             }
             DontDestroyOnLoad(gameObject);
