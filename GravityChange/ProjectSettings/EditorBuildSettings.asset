@@ -27,9 +27,6 @@ EditorBuildSettings:
     path: Assets/Scenes/lvl4.unity
     guid: 4d19cefece203784285f33e04642f1ba
   - enabled: 1
-    path: Assets/Scenes/lvl5.unity
-    guid: 731ee3efe3ae9244b855e7f88091e70f
-  - enabled: 1
     path: Assets/Scenes/Pause.unity
     guid: 7131cc22dc05a0746823bd4a200539f4
   m_configObjects: {}
