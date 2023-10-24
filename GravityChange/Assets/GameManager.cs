@@ -6,58 +6,27 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public Transform Player;
-    // Start is called before the first frame update
-    void Start()
+    public static GameManager Instance;
+
+    private void Awake()
     {
-
+        // Singleton pattern to ensure there is only one instance of GameManager
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Destroy(gameObject);
-            SceneManager.LoadScene(sceneName:"Pause");
-        }
-    }
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("NextLevel"))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            GameObject LoadPJ = GameObject.Find("LoadPJ");
-            if (LoadPJ != null)
-            {
-                Vector3 Posiciones = LoadPJ.transform.position;
-                Player.position = new Vector3(Posiciones.x,Posiciones.y,Player.position.z);
-
-            }
-            DontDestroyOnLoad(gameObject);
-        }
-
-        if (collision.gameObject.CompareTag("ReturnLevel"))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-            GameObject LoadPJ = GameObject.Find("Return");
-            if (LoadPJ != null)
-            {
-                Vector3 Posiciones = LoadPJ.transform.position;
-                Player.position = new Vector3(Posiciones.x, Player.position.y, Player.position.z);
-            }
-            if((SceneManager.GetActiveScene().buildIndex-1) == 2)
-            {
-                Destroy(gameObject);
-            }
-            
-            //gameObject.transform.Translate(transform.position);
-        }
-        if (collision.gameObject.CompareTag("Pinchos"))
-        {
-            // El jugador ha tocado los pinchos, reinicia la escena
-            Destroy(gameObject);
-            SceneManager.LoadScene(0);
-            
+            SceneManager.LoadScene(sceneName: "Pause");
         }
     }
 }

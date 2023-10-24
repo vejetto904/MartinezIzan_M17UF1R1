@@ -27,6 +27,7 @@ public class ControlPersonaje : MonoBehaviour
         ReiniciarNivel();
     }
 
+
     void MoverPersonaje()
     {
         float movimientoHorizontal = Input.GetAxis("Horizontal");
@@ -75,6 +76,23 @@ public class ControlPersonaje : MonoBehaviour
 
             // Recargar la escena actual
             SceneManager.LoadScene(indiceEscenaActual);
+        }
+    }
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("NextLevel"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+
+        if (collision.gameObject.CompareTag("ReturnLevel"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        }
+        if (collision.gameObject.CompareTag("Pinchos"))
+        {
+            // El jugador ha tocado los pinchos, reinicia la escena
+            SceneManager.LoadScene(0);
         }
     }
 
