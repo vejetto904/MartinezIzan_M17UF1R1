@@ -9,7 +9,21 @@ public class ControlPersonaje : MonoBehaviour
     private Animator animador;
     private bool gravedadInvertida = false;
     private Rigidbody2D rb;
+    public static ControlPersonaje Instance;
 
+    private void Awake()
+    {
+        // Singleton pattern to ensure there is only one instance of GameManager
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     void Start()
     {
         animador = GetComponent<Animator>();
@@ -26,8 +40,6 @@ public class ControlPersonaje : MonoBehaviour
         ActualizarAnimacion();
         ReiniciarNivel();
     }
-
-
     void MoverPersonaje()
     {
         float movimientoHorizontal = Input.GetAxis("Horizontal");
@@ -92,6 +104,7 @@ public class ControlPersonaje : MonoBehaviour
         if (collision.gameObject.CompareTag("Pinchos"))
         {
             // El jugador ha tocado los pinchos, reinicia la escena
+            Destroy(gameObject);
             SceneManager.LoadScene(0);
         }
     }
