@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public Transform Player;
     public static GameManager Instance;
+    private ControlPersonaje Player;
 
     private void Awake()
     {
@@ -21,12 +21,27 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    void Start()
+    {
+        Player = ControlPersonaje.Instance;
+    }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Destroy(gameObject);
+            Destroy(Player);
             SceneManager.LoadScene(sceneName: "Pause");
+        }
+    }
+    public void canviEscena(int escena)
+    {
+        if (escena == 0)
+        {
+            Application.Quit();
+        }
+        else
+        {
+            SceneManager.LoadScene(escena);
         }
     }
 }
