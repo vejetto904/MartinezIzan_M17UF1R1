@@ -38,7 +38,6 @@ public class ControlPersonaje : MonoBehaviour
             InvertirGravedad();
         }
         ActualizarAnimacion();
-        ReiniciarNivel();
     }
     void MoverPersonaje()
     {
@@ -78,34 +77,22 @@ public class ControlPersonaje : MonoBehaviour
         float movimientoHorizontal = Input.GetAxis("Horizontal");
         animador.SetBool("IsRunning", Mathf.Abs(movimientoHorizontal) > 0.1f);
     }
-
-    void ReiniciarNivel()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            // Obtener el índice de la escena actual
-            int indiceEscenaActual = SceneManager.GetActiveScene().buildIndex;
-
-            // Recargar la escena actual
-            SceneManager.LoadScene(indiceEscenaActual);
-        }
-    }
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("NextLevel"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            GameManager.Instance.NextLevel();
         }
 
         if (collision.gameObject.CompareTag("ReturnLevel"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            GameManager.Instance.PreviousLevel();
         }
+
         if (collision.gameObject.CompareTag("Pinchos"))
         {
-            // El jugador ha tocado los pinchos, reinicia la escena
             Destroy(gameObject);
-            SceneManager.LoadScene(0);
+            GameManager.Instance.RestartLevel();
         }
     }
 

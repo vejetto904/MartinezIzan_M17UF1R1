@@ -13,11 +13,14 @@ public class MovimientoEnemigo : MonoBehaviour
     private bool mirandoDerecha = true;
     private SpriteRenderer spriteRenderer;
 
+    private AudioSource Musica;
     void Start()
     {
         puntoInicio = new Vector3(puntoInicioX, transform.position.y, transform.position.z);
         puntoFinal = new Vector3(puntoFinalX, transform.position.y, transform.position.z);
         spriteRenderer = GetComponent<SpriteRenderer>();
+        Musica = GetComponent<AudioSource>();
+
 
         StartCoroutine(MoverEnemigo());
     }
@@ -36,6 +39,7 @@ public class MovimientoEnemigo : MonoBehaviour
 
             // Esperar en el punto final
             yield return new WaitForSeconds(tiempoEsperaEnPuntoFinal);
+            Musica.Play();
 
             // Mover hacia el punto de inicio
             while (Mathf.Abs(transform.position.x - puntoInicio.x) > 0.1f)
