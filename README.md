@@ -93,10 +93,6 @@ Este script, escrito en C# para Unity, controla el movimiento cíclico de una bo
 
 Este script asume que la posición final está configurada correctamente en tu juego. Asegúrate de tener las capas y etiquetas necesarias.
 
-## Licencia
-
-Este script está disponible bajo la [Licencia MIT](LICENSE).
-
 ---
 
 **¡Importante!**
