@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         // Singleton pattern to ensure there is only one instance of GameManager
-        if (SceneManager.GetActiveScene().buildIndex == 0 || SceneManager.GetActiveScene().buildIndex == 8)
+        if (SceneManager.GetActiveScene().buildIndex == 7 || SceneManager.GetActiveScene().buildIndex == 8)
         {
             gameObject.SetActive(false);
         }
@@ -39,12 +39,12 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(sceneName: "Pause");
         }
 
-        if(SceneManager.GetActiveScene().buildIndex == 0 && !IsSceneCero)
+        if(SceneManager.GetActiveScene().buildIndex == 8 && !IsSceneCero)
         {
             Musica.Stop();
             IsSceneCero =true;
         }
-        else if(SceneManager.GetActiveScene().buildIndex != 0 && IsSceneCero)
+        else if(SceneManager.GetActiveScene().buildIndex != 8 && IsSceneCero)
         {
             Musica.Play();
             IsSceneCero=false;
@@ -71,6 +71,6 @@ public class GameManager : MonoBehaviour
     }
     public void RestartLevel()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(8);
     }
 }
