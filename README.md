@@ -108,7 +108,7 @@ El script `GameManager` en C# para Unity gestiona el flujo del juego, proporcion
 
 - **Singleton Pattern:** Implementa el patrón Singleton para asegurar que solo haya una instancia del `GameManager` en ejecución.
 
-- **Inicio y Desactivación en Escenas Específicas:** Desactiva el objeto `GameManager` en las escenas de inicio (índice 0) y la escena de créditos (índice 7), para evitar interferencias.
+- **Inicio y Desactivación en Escenas Específicas:** Desactiva el objeto `GameManager` en las escenas de inicio (índice 8) y la escena de créditos (índice 7), para evitar interferencias.
 
 - **Pausa del Juego:** Al presionar la tecla 'Escape', carga la escena "Pause" para pausar el juego.
 
